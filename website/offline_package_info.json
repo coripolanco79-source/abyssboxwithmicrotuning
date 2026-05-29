@@ -1,0 +1,207 @@
+{
+  "name": "AbyssBox-Offline",
+  "version": "1.4.5",
+  "description": "Offline downloadable music maker - Professional chiptune and instrumental composition tool",
+  "build_info": {
+    "date": "2026-05-29",
+    "type": "offline_package",
+    "platform": "cross-platform"
+  },
+  "system_requirements": {
+    "browser": "Chrome, Firefox, Safari, Edge (latest versions)",
+    "os": "Windows, macOS, Linux, iOS, Android",
+    "ram": "minimum 256MB, recommended 512MB+",
+    "disk": "Complete: 150MB, Minimal: 40MB",
+    "internet": "Optional - only needed for MP3 codec download"
+  },
+  "features": [
+    "Fully functional offline music editor",
+    "Real-time audio synthesis",
+    "Multiple sound banks (Kirby, Mario, Wario, drums)",
+    "Microtonal tuning (1-1200 EDO support)",
+    "Advanced effects (reverb, echo, filter, distortion)",
+    "Granular synthesis and FM modulation",
+    "Export to WAV and MP3 formats",
+    "URL-based song sharing",
+    "Complete privacy - no data collection",
+    "Responsive design for all screen sizes"
+  ],
+  "package_contents": {
+    "editor": "beepbox_editor.min.js",
+    "player": "beepbox_player.min.js",
+    "samples": [
+      "samples.js",
+      "samples2.js",
+      "samples3.js",
+      "drumsamples.js",
+      "kirby_samples.js",
+      "mario_paintbox_samples.js",
+      "nintaribox_samples.js",
+      "wario_samples.js"
+    ],
+    "assets": [
+      "favicon.ico",
+      "icon_32.png",
+      "icon_maskable_192.png",
+      "apple-touch-icon.png",
+      "image_assets/"
+    ],
+    "documentation": [
+      "README_OFFLINE.md",
+      "index.html",
+      "manual.html",
+      "faq.html",
+      "credits.html"
+    ]
+  },
+  "instruments": {
+    "melodic": [
+      "Square Wave",
+      "Sine Wave",
+      "Sawtooth Wave",
+      "Triangle Wave",
+      "Pulse Width Modulation",
+      "Custom Waveforms"
+    ],
+    "drums": [
+      "Kick Drum",
+      "Snare Drum",
+      "Tom Drums",
+      "Hi-Hat (Closed)",
+      "Hi-Hat (Open)",
+      "Cymbal Samples",
+      "Professional Drum Kits"
+    ],
+    "special": [
+      "FM Synthesis",
+      "Granular Synthesis",
+      "Unison Voices",
+      "Arpeggiators"
+    ]
+  },
+  "effects": [
+    "Reverb (Room, Hall, Cathedral)",
+    "Echo/Delay",
+    "Low-Pass Filter",
+    "High-Pass Filter",
+    "Band-Pass Filter",
+    "Distortion",
+    "Bit-Crushing",
+    "Phaser",
+    "Chorus",
+    "Fade In/Out",
+    "Envelope Shaping"
+  ],
+  "tuning_systems": {
+    "presets": [
+      "12 EDO (Equal Temperament)",
+      "19 EDO (Neutral Thirds)",
+      "24 EDO (Quarter-tones)",
+      "31 EDO",
+      "36 EDO (Sixth-tones)",
+      "53 EDO (Pythagorean)",
+      "72 EDO (Twelfth-tones)",
+      "13 EDO (Bohlen-Pierce)",
+      "55 EDO (Werkmeister III)"
+    ],
+    "custom": "1-1200 EDO supported",
+    "detune": "Fine-tuning in cents"
+  },
+  "export_formats": {
+    "wav": {
+      "description": "Lossless WAV format",
+      "requires_internet": false,
+      "quality": "Highest quality"
+    },
+    "mp3": {
+      "description": "Compressed MP3 format",
+      "requires_internet": true,
+      "note": "Codec downloaded on first use"
+    }
+  },
+  "sharing": {
+    "method": "URL-based",
+    "format": "song_data_in_url",
+    "features": [
+      "Automatic URL generation",
+      "URL shortening option",
+      "Full song recreation from URL",
+      "No server required"
+    ]
+  },
+  "build_instructions": {
+    "step_1": "Extract the offline package",
+    "step_2": "Option A: Open index.html directly in browser",
+    "step_3": "Option B: Run local web server (recommended)",
+    "server_commands": [
+      "python -m http.server 8000",
+      "npx http-server",
+      "ruby -run -ehttpd . -p8000"
+    ],
+    "step_4": "Visit http://localhost:8000 in your browser",
+    "step_5": "Start creating music!"
+  },
+  "troubleshooting": [
+    {
+      "issue": "No sound playing",
+      "solutions": [
+        "Check browser volume",
+        "Verify JavaScript is enabled",
+        "Try different browser",
+        "Clear browser cache"
+      ]
+    },
+    {
+      "issue": "UI not loading",
+      "solutions": [
+        "Use local web server instead of file://",
+        "Disable browser extensions",
+        "Try incognito/private mode",
+        "Check browser compatibility"
+      ]
+    },
+    {
+      "issue": "Performance issues",
+      "solutions": [
+        "Close other browser tabs",
+        "Reduce active patterns",
+        "Use modern browser"
+      ]
+    },
+    {
+      "issue": "Cannot export MP3",
+      "solutions": [
+        "Use WAV format (works offline)",
+        "Check internet connection for MP3 codec",
+        "Try different browser"
+      ]
+    }
+  ],
+  "credits": {
+    "abyssbox": "Created by choptop84",
+    "ultrabox": "Created by Main and Neptendo",
+    "jummbox": "Created by Jummbus",
+    "beepbox": "Created by John Nesky",
+    "third_party": [
+      "jQuery - MIT License",
+      "Select2 - MIT License",
+      "Alwan Color Picker - MIT License",
+      "Opus Encoder - BSD License"
+    ]
+  },
+  "license": "MIT License",
+  "repository": {
+    "url": "https://github.com/coripolanco79-source/abyssboxwithmicrotuning",
+    "type": "public",
+    "license": "MIT"
+  },
+  "support": {
+    "documentation": [
+      "README_OFFLINE.md",
+      "manual.html",
+      "faq.html"
+    ],
+    "github": "https://github.com/coripolanco79-source/abyssboxwithmicrotuning",
+    "issues": "Report bugs and request features on GitHub"
+  }
+}
