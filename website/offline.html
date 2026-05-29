@@ -164,6 +164,8 @@
             transition: all 0.3s ease;
             width: 100%;
             margin-bottom: 10px;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .download-button:hover {
@@ -463,6 +465,22 @@
             border-radius: 4px;
             color: #9c64f7;
         }
+
+        .github-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #9c64f7 0%, #7a3fa3 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .github-link:hover {
+            background: linear-gradient(135deg, #b380ff 0%, #9c64f7 100%);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -477,8 +495,11 @@
         </header>
 
         <div class="banner">
-            <h3>✨ New Release - Fully Offline with Microtonal Support ✨</h3>
-            <p>Download now and start making music instantly. No internet required!</p>
+            <h3>✨ Download from GitHub Releases ✨</h3>
+            <p>Get the complete offline music maker with all features included</p>
+            <a href="https://github.com/coripolanco79-source/abyssboxwithmicrotuning/releases" target="_blank" class="github-link">
+                📥 View GitHub Releases
+            </a>
         </div>
 
         <div class="main-content">
@@ -486,9 +507,9 @@
                 <div class="card-icon">📦</div>
                 <h2>Complete Edition</h2>
                 <p>Everything you need including all sound banks, effects, and advanced features.</p>
-                <button class="download-button" onclick="downloadFile('complete')">
+                <a href="https://github.com/coripolanco79-source/abyssboxwithmicrotuning/releases" target="_blank" class="download-button">
                     ⬇️ Download Complete
-                </button>
+                </a>
                 <div class="file-size">~150 MB (Compressed)</div>
                 <p style="font-size: 0.85em; margin-top: 10px; color: #999;">All features included</p>
             </div>
@@ -497,20 +518,20 @@
                 <div class="card-icon">⚡</div>
                 <h2>Minimal Edition</h2>
                 <p>Lightweight version with essential sounds and core functionality.</p>
-                <button class="download-button" onclick="downloadFile('minimal')">
+                <a href="https://github.com/coripolanco79-source/abyssboxwithmicrotuning/releases" target="_blank" class="download-button">
                     ⬇️ Download Minimal
-                </button>
+                </a>
                 <div class="file-size">~40 MB (Compressed)</div>
                 <p style="font-size: 0.85em; margin-top: 10px; color: #999;">Essential features</p>
             </div>
 
             <div class="download-card">
                 <div class="card-icon">🔧</div>
-                <h2>Developer Edition</h2>
-                <p>Source code and build script for creating custom packages.</p>
-                <button class="download-button" onclick="downloadFile('source')">
-                    ⬇️ Download Source
-                </button>
+                <h2>Source Code</h2>
+                <p>Clone the repository and build custom packages with full control.</p>
+                <a href="https://github.com/coripolanco79-source/abyssboxwithmicrotuning" target="_blank" class="download-button">
+                    💻 Clone Repository
+                </a>
                 <div class="file-size">MIT Licensed</div>
                 <p style="font-size: 0.85em; margin-top: 10px; color: #999;">Open source</p>
             </div>
@@ -620,7 +641,7 @@
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
-                        <strong>Download</strong> - Click one of the download buttons above to get your package
+                        <strong>Download</strong> - Click one of the download buttons above or visit GitHub Releases
                     </div>
                 </div>
 
@@ -762,7 +783,8 @@
                 Created by <span class="highlight">choptop84</span> | Licensed under MIT
             </p>
             <div class="social-links">
-                <a href="https://github.com/coripolanco79-source/abyssboxwithmicrotuning" target="_blank">GitHub</a>
+                <a href="https://github.com/coripolanco79-source/abyssboxwithmicrotuning" target="_blank">GitHub Repository</a>
+                <a href="https://github.com/coripolanco79-source/abyssboxwithmicrotuning/releases" target="_blank">Releases</a>
                 <a href="https://github.com/choptop84/abyssbox-source" target="_blank">Upstream</a>
             </div>
             <p style="margin-top: 20px; font-size: 0.85em; color: #666;">
@@ -787,33 +809,6 @@
                 star.style.animationDelay = Math.random() * 3 + 's';
                 starsContainer.appendChild(star);
             }
-        }
-
-        // Download file simulation
-        function downloadFile(type) {
-            const downloads = {
-                'complete': {
-                    name: 'AbyssBox-Offline-Complete.zip',
-                    size: '150 MB',
-                    message: 'Complete Edition - All features and sound banks'
-                },
-                'minimal': {
-                    name: 'AbyssBox-Offline-Minimal.zip',
-                    size: '40 MB',
-                    message: 'Minimal Edition - Core features'
-                },
-                'source': {
-                    name: 'AbyssBox-Source.zip',
-                    size: 'MIT Licensed',
-                    message: 'Source Code - MIT Licensed'
-                }
-            };
-
-            const download = downloads[type];
-            alert(`🎵 Download Ready!\n\n📦 ${download.message}\n📁 Filename: ${download.name}\n📊 Size: ${download.size}\n\nYour download should start automatically.\n\nIf not, please download from GitHub:\ngithub.com/coripolanco79-source/abyssboxwithmicrotuning`);
-            
-            // In production, this would trigger actual download
-            console.log(`Downloading: ${download.name}`);
         }
 
         // Toggle FAQ items
@@ -844,14 +839,6 @@
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
-        });
-
-        // Add keyboard shortcuts info
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'd') {
-                e.preventDefault();
-                document.querySelector('.download-button').click();
-            }
         });
     </script>
 </body>
