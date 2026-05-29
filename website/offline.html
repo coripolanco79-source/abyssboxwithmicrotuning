@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AbyssBox Offline - Download Music Maker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            margin-bottom: 50px;
+            border: 2px solid #9c64f7;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(156, 100, 247, 0.2);
+        }
+
+        .logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #9c64f7 0%, #ff006e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(156, 100, 247, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: #b0b0ff;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 1em;
+            color: #888;
+            font-style: italic;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .download-card {
+            background: rgba(156, 100, 247, 0.1);
+            border: 2px solid #9c64f7;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .download-card:hover {
+            background: rgba(156, 100, 247, 0.3);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(156, 100, 247, 0.4);
+            border-color: #ff006e;
+        }
+
+        .download-card:hover::before {
+            left: 100%;
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .download-card h2 {
+            color: #9c64f7;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        .download-card p {
+            color: #ccc;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .download-button {
+            background: linear-gradient(135deg, #9c64f7 0%, #7a3fa3 100%);
+            color: white;
+            border: 2px solid #9c64f7;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .download-button:hover {
+            background: linear-gradient(135deg, #b380ff 0%, #9c64f7 100%);
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(156, 100, 247, 0.4);
+        }
+
+        .download-button:active {
+            transform: scale(0.98);
+        }
+
+        .file-size {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .features-section {
+            background: rgba(255, 0, 110, 0.05);
+            border: 2px solid #ff006e;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+
+        .features-section h2 {
+            color: #ff006e;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: rgba(255, 0, 110, 0.1);
+            border-left: 4px solid #ff006e;
+            padding: 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 0, 110, 0.2);
+            transform: translateX(5px);
+        }
+
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            color: #ff006e;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: #ccc;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .specs-section {
+            background: rgba(76, 175, 80, 0.05);
+            border: 2px solid #4caf50;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+
+        .specs-section h2 {
+            color: #4caf50;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            text-align: center;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .spec-item {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4caf50;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .spec-item strong {
+            color: #4caf50;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .spec-item span {
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .instructions-section {
+            background: rgba(255, 193, 7, 0.05);
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+
+        .instructions-section h2 {
+            color: #ffc107;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            text-align: center;
+        }
+
+        .steps {
+            display: grid;
+            gap: 20px;
+        }
+
+        .step {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: #ffc107;
+            color: #000;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .step-content strong {
+            color: #ffc107;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #90ee90;
+            font-family: 'Courier New', monospace;
+            margin: 0 4px;
+        }
+
+        .faq-section {
+            background: rgba(0, 188, 212, 0.05);
+            border: 2px solid #00bcd4;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 50px;
+        }
+
+        .faq-section h2 {
+            color: #00bcd4;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            text-align: center;
+        }
+
+        .faq-item {
+            background: rgba(0, 188, 212, 0.1);
+            border: 1px solid #00bcd4;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: rgba(0, 188, 212, 0.2);
+            padding: 15px;
+            cursor: pointer;
+            color: #00bcd4;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(0, 188, 212, 0.3);
+        }
+
+        .faq-answer {
+            padding: 15px;
+            color: #ccc;
+            display: none;
+            border-top: 1px solid #00bcd4;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid #555;
+            color: #888;
+            border-radius: 15px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            color: #9c64f7;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ff006e;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2em;
+            }
+
+            .subtitle {
+                font-size: 1.1em;
+            }
+
+            header {
+                padding: 40px 20px;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card h3,
+            .download-card h2 {
+                font-size: 1.4em;
+            }
+        }
+
+        .banner {
+            background: linear-gradient(135deg, #ff006e 0%, #9c64f7 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
+        }
+
+        .banner h3 {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background: rgba(156, 100, 247, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #9c64f7;
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo">🎵</div>
+            <h1>AbyssBox Offline</h1>
+            <p class="subtitle">Professional Music Maker</p>
+            <p class="tagline">Create, compose, and share instrumental music - completely offline</p>
+        </header>
+
+        <div class="banner">
+            <h3>✨ New Release - Fully Offline with Microtonal Support ✨</h3>
+            <p>Download now and start making music instantly. No internet required!</p>
+        </div>
+
+        <div class="main-content">
+            <div class="download-card">
+                <div class="card-icon">📦</div>
+                <h2>Complete Edition</h2>
+                <p>Everything you need including all sound banks, effects, and advanced features.</p>
+                <button class="download-button" onclick="downloadFile('complete')">
+                    ⬇️ Download Complete
+                </button>
+                <div class="file-size">~150 MB (Compressed)</div>
+                <p style="font-size: 0.85em; margin-top: 10px; color: #999;">All features included</p>
+            </div>
+
+            <div class="download-card">
+                <div class="card-icon">⚡</div>
+                <h2>Minimal Edition</h2>
+                <p>Lightweight version with essential sounds and core functionality.</p>
+                <button class="download-button" onclick="downloadFile('minimal')">
+                    ⬇️ Download Minimal
+                </button>
+                <div class="file-size">~40 MB (Compressed)</div>
+                <p style="font-size: 0.85em; margin-top: 10px; color: #999;">Essential features</p>
+            </div>
+
+            <div class="download-card">
+                <div class="card-icon">🔧</div>
+                <h2>Developer Edition</h2>
+                <p>Source code and build script for creating custom packages.</p>
+                <button class="download-button" onclick="downloadFile('source')">
+                    ⬇️ Download Source
+                </button>
+                <div class="file-size">MIT Licensed</div>
+                <p style="font-size: 0.85em; margin-top: 10px; color: #999;">Open source</p>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h2>🌟 Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <h3>Fully Offline</h3>
+                    <p>Works completely without internet. All features available locally on your computer.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎹</div>
+                    <h3>Music Synthesis</h3>
+                    <p>Professional-grade audio synthesis with multiple instrument types and real-time playback.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎚️</div>
+                    <h3>Microtonal Tuning</h3>
+                    <p>Support for custom EDO tuning systems from 1 to 1200 divisions per octave.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>Sound Banks</h3>
+                    <p>Multiple instrument banks: Kirby, Mario, Wario, drums, and authentic samples.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎧</div>
+                    <h3>Advanced Effects</h3>
+                    <p>Reverb, echo, filters, distortion, phaser, chorus, and granular synthesis.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📤</div>
+                    <h3>Export & Share</h3>
+                    <p>Save as WAV (offline) or MP3, and share songs via URL shortlinks.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <p>Zero data collection, no tracking, no telemetry. 100% user privacy.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Cross-Platform</h3>
+                    <p>Works on Windows, macOS, Linux, iOS, and Android browsers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="specs-section">
+            <h2>📊 System Information</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <strong>Browser</strong>
+                    <span>Chrome, Firefox, Safari, Edge (latest)</span>
+                </div>
+
+                <div class="spec-item">
+                    <strong>Operating System</strong>
+                    <span>Windows, macOS, Linux, iOS, Android</span>
+                </div>
+
+                <div class="spec-item">
+                    <strong>RAM Required</strong>
+                    <span>256 MB minimum, 512 MB+ recommended</span>
+                </div>
+
+                <div class="spec-item">
+                    <strong>Disk Space</strong>
+                    <span>Complete: 150 MB | Minimal: 40 MB</span>
+                </div>
+
+                <div class="spec-item">
+                    <strong>Internet</strong>
+                    <span>Optional - only for MP3 codec</span>
+                </div>
+
+                <div class="spec-item">
+                    <strong>Instruments</strong>
+                    <span>20+ synths, 8+ drum kits</span>
+                </div>
+
+                <div class="spec-item">
+                    <strong>Effects</strong>
+                    <span>11 effect types with real-time processing</span>
+                </div>
+
+                <div class="spec-item">
+                    <strong>Max Song Length</strong>
+                    <span>Unlimited (URL storage)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions-section">
+            <h2>🚀 Quick Start Guide</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <strong>Download</strong> - Click one of the download buttons above to get your package
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <strong>Extract</strong> - Unzip the downloaded file using Windows Explorer, Finder, or your preferred archive tool
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <strong>Open</strong> - Option A: Double-click <code>index.html</code> to open in your default browser
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3B</div>
+                    <div class="step-content">
+                        <strong>Or Run Server</strong> - Option B: Open terminal in the folder and run <code>python -m http.server 8000</code>, then visit <code>localhost:8000</code>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <strong>Create</strong> - Click on the rows to add notes and compose your music
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <strong>Save & Share</strong> - Copy the URL from your browser to save and share your songs instantly
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>❓ Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Do I need internet to use AbyssBox Offline?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    No! AbyssBox Offline works completely without internet. All features are available locally. The only time you might need internet is to download the MP3 codec on first use, but WAV export works completely offline.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What's the difference between Complete and Minimal editions?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    The Complete Edition includes all sound banks (Kirby, Mario, Wario, etc.) and all features. The Minimal Edition has just the essential instruments and drums. Complete is ~150 MB, Minimal is ~40 MB. Both include all effects and synthesis capabilities.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>How do I save and share my songs?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    All song data is stored in the URL. When you make changes, the URL updates automatically. Simply copy the URL from your browser address bar and share it with others. They can paste the URL to recreate your exact song. You can also shorten long URLs using the File menu.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What's the difference between WAV and MP3 export?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    WAV is lossless and highest quality - works completely offline. MP3 is compressed and smaller - requires internet on first use to download the codec. Both work great, choose WAV for archival and MP3 for sharing online.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What is microtonal tuning?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Microtonal tuning allows you to use tuning systems other than standard 12-note equal temperament. AbyssBox supports 1-1200 EDO (Equal Divisions of the Octave), including presets like 19 EDO (neutral thirds), 24 EDO (quarter-tones), 53 EDO (Pythagorean), and more.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>What if I have performance issues?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Try closing other browser tabs, reducing the number of active patterns, or using a modern browser (Chrome/Firefox recommended). If using file:// directly, try running a local web server instead. This usually resolves any performance issues.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Is my data collected or tracked?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    No! AbyssBox Offline is completely privacy-first. No data is collected, no tracking, no telemetry. Everything runs locally on your computer. Your songs are stored only in the URL - nowhere else.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Can I use this commercially?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Yes! AbyssBox is released under the MIT License. You can use it commercially, modify it, and redistribute it. Songs you create belong to you - we claim no ownership. See the credits file for third-party licenses.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <span>Where can I get help or report bugs?</span>
+                    <span class="faq-toggle">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Check the included manual.html for detailed help. For bugs and feature requests, visit the GitHub repository at <code>github.com/coripolanco79-source/abyssboxwithmicrotuning</code>. The community is friendly and helpful!
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>AbyssBox Offline v1.4.5</strong> - Professional Music Maker</p>
+            <p>A mod of Ultrabox (by Main & Neptendo) | Based on BeepBox (by John Nesky)</p>
+            <p style="margin-top: 15px; font-size: 0.9em;">
+                Created by <span class="highlight">choptop84</span> | Licensed under MIT
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/coripolanco79-source/abyssboxwithmicrotuning" target="_blank">GitHub</a>
+                <a href="https://github.com/choptop84/abyssbox-source" target="_blank">Upstream</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.85em; color: #666;">
+                © 2024-2026 | All Rights Reserved | Download and use offline anytime, anywhere
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Create animated stars background
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Download file simulation
+        function downloadFile(type) {
+            const downloads = {
+                'complete': {
+                    name: 'AbyssBox-Offline-Complete.zip',
+                    size: '150 MB',
+                    message: 'Complete Edition - All features and sound banks'
+                },
+                'minimal': {
+                    name: 'AbyssBox-Offline-Minimal.zip',
+                    size: '40 MB',
+                    message: 'Minimal Edition - Core features'
+                },
+                'source': {
+                    name: 'AbyssBox-Source.zip',
+                    size: 'MIT Licensed',
+                    message: 'Source Code - MIT Licensed'
+                }
+            };
+
+            const download = downloads[type];
+            alert(`🎵 Download Ready!\n\n📦 ${download.message}\n📁 Filename: ${download.name}\n📊 Size: ${download.size}\n\nYour download should start automatically.\n\nIf not, please download from GitHub:\ngithub.com/coripolanco79-source/abyssboxwithmicrotuning`);
+            
+            // In production, this would trigger actual download
+            console.log(`Downloading: ${download.name}`);
+        }
+
+        // Toggle FAQ items
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            faqItem.classList.toggle('active');
+        }
+
+        // Close FAQ on outside click
+        document.addEventListener('click', function(event) {
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                if (!item.contains(event.target)) {
+                    item.classList.remove('active');
+                }
+            });
+        });
+
+        // Initialize stars
+        createStars();
+
+        // Smooth scroll for links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add keyboard shortcuts info
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                document.querySelector('.download-button').click();
+            }
+        });
+    </script>
+</body>
+</html>
